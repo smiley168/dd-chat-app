@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-// import faker from 'faker';
+import faker from 'faker';
 import './App.css';
 import ChatBubble from './components/ChatBubble';
 
@@ -23,7 +23,13 @@ class App extends React.Component {
         "Nick": "https://s3.amazonaws.com/uifaces/faces/twitter/nvkznemo/128.jpg",
         "Danielle": "https://s3.amazonaws.com/uifaces/faces/twitter/wintopia/128.jpg",
         "Jessye": "https://s3.amazonaws.com/uifaces/faces/twitter/angelceballos/128.jpg",
+        "Piggy": "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
       },
+      signedInUser: {
+        name: "Piggy",
+        avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
+        input: null,
+      }
     };
 
   }
@@ -97,6 +103,33 @@ class App extends React.Component {
     return null;
   }
 
+  handleSendMessage = () => {
+    console.log('sending message...');
+    console.dir(this.state.signedInUser);
+    
+    const newMessage = {
+      name: this.state.signedInUser.name,
+      message: this.state.signedInUser.input,
+      id: this.state.signedInUser.id,
+      reaction: null,
+    };
+    const roomId = this.state.selectedRoom.id;
+    const currListsOfRooms = this.state.listOfRooms;
+    console.dir(currListsOfRooms);
+    const newListsOfRooms = [].concat(currListsOfRooms);
+    const chatRoomCurrMessages = newListsOfRooms[roomId].messages;
+    chatRoomCurrMessages.push(newMessage);
+
+    console.log('new List of rooms');
+    console.dir(newListsOfRooms);
+
+    this.setState({
+      listOfRooms: newListsOfRooms,
+      selectedRoom: Object.assign(this.state.selectedRoom, {messages: chatRoomCurrMessages}),
+      signedInUser: Object.assign(this.state.signedInUser, {input: ""}),
+    });
+  }
+
   
   render() {
     return (
@@ -131,17 +164,23 @@ class App extends React.Component {
         </div>
         <div className="box content">
           {this.state.selectedRoom.id === null && (
-            <div>Be the first to say something in this chat room!</div>
+            <div>Select a room to begin your chat</div>
+            
           )}
           {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
-            <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users}/>
+            <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser}/>
           )}
           
         </div>
         <div className="box footer">
           <div className="ui fluid action input full">
-            <input type="text" placeholder="Type here..." />
-            <div className="ui button">Send</div>
+            <input 
+              type="text" 
+              placeholder="Type here..." 
+              value={this.state.signedInUser.input}
+              onChange={(e) => this.setState({ signedInUser: Object.assign(this.state.signedInUser, {input: e.target.value})})}
+            />
+            <div className="ui button" onClick={this.handleSendMessage}>Send</div>
           </div>
         </div>
       </div>

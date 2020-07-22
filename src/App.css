@@ -90,13 +90,13 @@ div.callout {
 }
 
 .callout.left::before {
-	right: -20px;
-	top: 40%;
+	right: -22px;
+	top: 25%;
 	border-left: 10px solid #444;
 }
 
 .callout.right::before {
-	left: -23px;
+	left: -22px;
 	top: 25%;
 	border-right: 10px solid #444;
 }
@@ -113,6 +113,16 @@ div.callout {
 	border-top: 10px solid #444;
 }
 
+.callout-wrapper-left {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: 4fr 80px;
+  grid-template-areas:
+  "bubble imageavatar";
+  align-items: center;
+  justify-items: right;
+}
+
 .callout-wrapper {
   display: grid;
   grid-gap: 0;
@@ -127,11 +137,19 @@ div.callout {
   font-size: medium;
 }
 
+div.callout.left.bubble,
 div.callout.right.bubble {
   width: 50vw;
   height: auto; 
   line-height: 1.5em;
   font-size: medium;
-  margin-left: 15px
+  overflow-wrap: break-word;
 }
 
+div.callout.right.bubble {
+  margin-left: 15px;
+}
+
+div.callout.left.bubble {
+  margin-right: 15px;
+}
