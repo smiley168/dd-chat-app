@@ -10,12 +10,11 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      currentRoom: "",
-      currentUser: "",
       listOfRooms: [],
       selectedRoom: {
-        name: "", 
-        listOfUsers: [],
+        name: "",
+        id: null,
+        messages: [],
       },
       selectedUser: "",
       hoverUser: "",
@@ -75,17 +74,19 @@ class App extends React.Component {
 
   }
 
-  async handleClick(roomId) {
-    console.log(roomId + " is clicked");
-    const response = await axios.get(`http://localhost:8080/api/rooms/${roomId}`);
-
-    this.setState({
-      selectedRoom: {
-        name: response.data.name,
-        listOfUsers: response.data.users,
-      }
-    });
-
+  handleClick(roomId) {
+    const selectedChatRoom = this.state.listOfRooms[roomId];
+    if(selectedChatRoom) {
+      const visibleMessages = selectedChatRoom.messages;
+      const roomName = selectedChatRoom.name;
+      this.setState({
+        selectedRoom: {
+          id: roomId,
+          name: roomName,
+          messages: visibleMessages,
+        }
+      });
+    }
   }
 
   getUserAvatar = (userName) => {
@@ -129,7 +130,13 @@ class App extends React.Component {
               ))}
         </div>
         <div className="box content">
-          <ChatBubble />
+          {this.state.selectedRoom.id === null && (
+            <div>Be the first to say something in this chat room!</div>
+          )}
+          {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
+            <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users}/>
+          )}
+          
         </div>
         <div className="box footer">
           <div className="ui fluid action input full">
