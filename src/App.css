@@ -24,7 +24,6 @@
     grid-area: footer;
 }
 
-
 .wrapper {
     display: grid;
     grid-gap: 0;
@@ -37,7 +36,6 @@
     color: #444;
 }
 
-
 .box {
   padding: 10px;
   font-size: 150%;
@@ -48,15 +46,26 @@
   background-color: darkolivegreen;
   color: #fff;
 }
+
 .item {
   padding: 10px;
+  cursor: default;
 }
+
+.item.room-name {
+  cursor: pointer;
+}
+
 .item.selected-room {
   background-color: green;
   padding: 10px;
   color: #fff;
   width: 100%;
   border-radius: 10px;
+}
+
+.ui.middle.aligned.list{
+  margin-top: 5px;
 }
 
 div.callout {
@@ -123,7 +132,7 @@ div.callout {
 	border-top: 10px solid #444;
 }
 
-.callout-wrapper-left {
+.callout-wrapper.left {
   display: grid;
   grid-gap: 0;
   grid-template-columns: 4fr 80px;
@@ -162,4 +171,13 @@ div.callout.right.bubble {
 
 div.callout.left.bubble {
   margin-right: 15px;
+}
+
+.callout-wrapper > .imageavatar {
+  text-align: center;
+}
+
+.callout-wrapper > .imageavatar > img.ui.avatar.image {
+  width: 3em;
+  height: 3em;
 }

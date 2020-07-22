@@ -123,7 +123,7 @@ class App extends React.Component {
         <div className="box sidebar">
           {this.state.listOfRooms.map( room => (
                 <>
-                  <div className={this.state.selectedRoom.name === room.name ? "item selected-room" : "item"} key={room.id} onClick={() => this.handleClick(room.id)}>
+                  <div className={this.state.selectedRoom.name === room.name ? "room-name item selected-room" : "room-name item "} key={room.id} onClick={() => this.handleClick(room.id)}>
                     <span><i className="users icon"></i></span>
                     <span style={{paddingLeft: "10px", lineHeight: "4vh"}}>{room.name}</span>
                   </div>
@@ -164,6 +164,7 @@ class App extends React.Component {
             <button 
               className={this.state.selectedRoom.id === null ? "ui button disabled" : "ui button"} 
               onClick={this.handleSendMessage}
+              style={{color: "teal", fontSize: "medium", backgroundColor: "aqua"}}
             >
               Send
             </button>

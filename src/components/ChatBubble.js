@@ -11,7 +11,7 @@ const ChatBubble = (props) => {
   return messages.length > 0 && messages.map( ({name, message, id, reaction}) => {
     if(name === signedInUser.name) {
       return (
-        <div className="callout-wrapper-left">
+        <div className="callout-wrapper left">
           <div className="callout left bubble">{message}</div>
           <div className="imageavatar">
             <img className="ui avatar image" alt="avatar" src={avatars[name]} />
