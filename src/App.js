@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import faker from 'faker';
+// import faker from 'faker';
 import './App.css';
 import ChatBubble from './components/ChatBubble';
 
