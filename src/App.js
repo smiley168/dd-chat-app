@@ -38,16 +38,13 @@ class App extends React.Component {
       const listOfRooms = await axios.get('http://localhost:8080/api/rooms');
 
       if(listOfRooms && listOfRooms.data && listOfRooms.data.length > 0) {
-        console.log(listOfRooms.data);
-        
         let enhancedRoomsData = [];
         const roomsData = listOfRooms.data;
         for(let i = 0; i < roomsData.length; i++) {
           const room = roomsData[i];
           const usersInRoom = await axios.get(`http://localhost:8080/api/rooms/${room.id}`);
           const messagesInRoom = await axios.get(`http://localhost:8080/api/rooms/${room.id}/messages`);
-          console.log('messagesInRoom:');
-          console.dir(messagesInRoom);
+
           let usersMessagesInRoom = {};
           if(usersInRoom && usersInRoom.data && usersInRoom.data.users) {
             usersMessagesInRoom.users = usersInRoom.data.users;
@@ -57,28 +54,19 @@ class App extends React.Component {
           }
           const aggregatedData = Object.assign(usersMessagesInRoom, roomsData[i]);
             enhancedRoomsData.push(aggregatedData);
-          
         }
-
-        console.log('enhancedRoomsData');
-        console.dir(enhancedRoomsData);
 
         this.setState({
           listOfRooms: enhancedRoomsData,
         });
-
-      }
-
-  
+      }  
     } catch(err) {
       console.log("Error while getting chat rooms info. Details: " + err);
     }
-    
-
 
   }
 
-  handleClick(roomId) {
+  handleClick = (roomId) => {
     const selectedChatRoom = this.state.listOfRooms[roomId];
     if(selectedChatRoom) {
       const visibleMessages = selectedChatRoom.messages;
@@ -101,10 +89,7 @@ class App extends React.Component {
     return null;
   }
 
-  handleSendMessage = () => {
-    console.log('sending message...');
-    console.dir(this.state.signedInUser);
-    
+  handleSendMessage = () => {   
     const newMessage = {
       name: this.state.signedInUser.name,
       message: this.state.signedInUser.input,
@@ -113,19 +98,21 @@ class App extends React.Component {
     };
     const roomId = this.state.selectedRoom.id;
     const currListsOfRooms = this.state.listOfRooms;
-    console.dir(currListsOfRooms);
     const newListsOfRooms = [].concat(currListsOfRooms);
     const chatRoomCurrMessages = newListsOfRooms[roomId].messages;
     chatRoomCurrMessages.push(newMessage);
-
-    console.log('new List of rooms');
-    console.dir(newListsOfRooms);
 
     this.setState({
       listOfRooms: newListsOfRooms,
       selectedRoom: Object.assign(this.state.selectedRoom, {messages: chatRoomCurrMessages}),
       signedInUser: Object.assign(this.state.signedInUser, {input: ""}),
     });
+  }
+
+  onKeyDown = (e) => {
+    if ( e.keyCode === 13 ) {
+      this.handleSendMessage();
+    }
   }
 
   
@@ -171,9 +158,15 @@ class App extends React.Component {
               type="text" 
               placeholder="Type here..." 
               value={this.state.signedInUser.input}
+              onKeyDown={this.onKeyDown}
               onChange={(e) => this.setState({ signedInUser: Object.assign(this.state.signedInUser, {input: e.target.value})})}
             />
-            <div className="ui button" onClick={this.handleSendMessage}>Send</div>
+            <button 
+              className={this.state.selectedRoom.id === null ? "ui button disabled" : "ui button"} 
+              onClick={this.handleSendMessage}
+            >
+              Send
+            </button>
           </div>
         </div>
       </div>
