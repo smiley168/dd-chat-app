@@ -119,7 +119,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="box header">DD Chat App</div>
+        <div className="box header">
+          <div className="left-side">DD Chat App</div>
+          <div className="right-side">
+             <span style={{paddingRight: "5px"}}>Signed In As: </span>
+            <img className="ui avatar image" alt="avatar" src={this.state.signedInUser.avatar} />
+            {this.state.signedInUser.name}
+          </div>
+        </div>
         <div className="box sidebar">
           {this.state.listOfRooms.map( room => (
                 <>
@@ -144,7 +151,7 @@ class App extends React.Component {
         </div>
         <div className="box content">
           {this.state.selectedRoom.id === null && (
-            <div>Select a room to begin your chat</div>
+            <div className="empty">Select a room to begin your chat</div>
             
           )}
           {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
@@ -156,7 +163,7 @@ class App extends React.Component {
           <div className="ui fluid action input full">
             <input 
               type="text" 
-              placeholder="Type here..." 
+              placeholder={this.state.selectedRoom.id === null ? "Select a room to begin your chat" : "Type here..." }
               value={this.state.signedInUser.input}
               onKeyDown={this.onKeyDown}
               onChange={(e) => this.setState({ signedInUser: Object.assign(this.state.signedInUser, {input: e.target.value})})}

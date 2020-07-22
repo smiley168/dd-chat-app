@@ -18,6 +18,23 @@
 
 .header {
     grid-area: header;
+    height: 60px;
+    padding: 20px;
+    line-height: 1.5em;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+      "left-side right-side";
+}
+
+.header > .right-side {
+  text-align: right;
+  font-size: medium;
+}
+
+.header > .left-side {
+  padding-top: 5px;
 }
 
 .footer {
@@ -45,6 +62,10 @@
 .footer {
   background-color: darkolivegreen;
   color: #fff;
+}
+
+.box.content > .empty {
+  padding: 25px;
 }
 
 .item {
@@ -180,4 +201,8 @@ div.callout.left.bubble {
 .callout-wrapper > .imageavatar > img.ui.avatar.image {
   width: 3em;
   height: 3em;
+}
+
+button.disabled {
+  cursor: default;
 }
