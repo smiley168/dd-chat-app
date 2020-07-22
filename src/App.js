@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import faker from 'faker';
 import './App.css';
 import ChatBubble from './components/ChatBubble';
 
@@ -17,7 +16,6 @@ class App extends React.Component {
         messages: [],
       },
       selectedUser: "",
-      hoverUser: "",
       users: {
         "Ryan": "https://s3.amazonaws.com/uifaces/faces/twitter/cbracco/128.jpg",
         "Nick": "https://s3.amazonaws.com/uifaces/faces/twitter/nvkznemo/128.jpg",
@@ -134,23 +132,18 @@ class App extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="box header">Chat App</div>
+        <div className="box header">DD Chat App</div>
         <div className="box sidebar">
           {this.state.listOfRooms.map( room => (
                 <>
-                  <div className={this.state.selectedRoom.name === room.name ? "item active" : "item"} key={room.id} onClick={() => this.handleClick(room.id)}>
+                  <div className={this.state.selectedRoom.name === room.name ? "item selected-room" : "item"} key={room.id} onClick={() => this.handleClick(room.id)}>
                     <span><i className="users icon"></i></span>
-                    <span style={{paddingLeft: "10px"}}>{room.name}</span>
+                    <span style={{paddingLeft: "10px", lineHeight: "4vh"}}>{room.name}</span>
                   </div>
                   
-                  <div className="ui middle aligned selection list" style={{paddingLeft: "15px"}}>
+                  <div className="ui middle aligned list" style={{paddingLeft: "15px"}}>
                     {room.users.map( user => (
-                      <div 
-                        className={this.state.selectedUser === user || this.state.hoverUser === user ? "item active" : "item"}  
-                        onMouseEnter={() => this.setState({hoverUser: user})}
-                        onMouseLeave={() => this.setState({hoverUser: ""})}
-                        onClick={() => this.setState({selectedUser: user})}
-                      >
+                      <div className="item">
                         <img className="ui avatar image" src={this.getUserAvatar(user)} alt="avatar" />
                         <span className="content">
                           {user}
