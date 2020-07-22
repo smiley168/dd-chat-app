@@ -124,6 +124,7 @@ div.callout {
 
 .imageavatar {
   justify-self: right;
+  font-size: medium;
 }
 
 div.callout.right.bubble {
