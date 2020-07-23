@@ -158,30 +158,22 @@ class App extends React.Component {
     return (
       <div className="wrapper">
         <div className="box header">
-          <h2>{this.state.selectedRoom.name}</h2>
+          <h3>{this.state.selectedRoom.name}</h3>
           <p><span className="signedInUser">{this.state.signedInUser.name}</span>{this.state.selectedRoom.users.map( (username, index) => (
               ', ' + username
             ))}</p>
         </div>
         <div className="box sidebar">
+          <div className="signedInInfo">
+            <div>{this.state.signedInUser.name}</div>
+            <p>Online for {this.state.onlineMinutes} minutes</p>
+          </div>
+          
           {this.state.listOfRooms.map( room => (
               <div key={Math.random()}>
                 <div className={this.state.selectedRoom.name === room.name ? "room-name item selected-room" : "room-name item "} key={`${room.id}-${Math.random()}`} onClick={() => this.handleClick(room.id)}>
-                  <span><i className="users icon"></i></span>
-                  <span style={{paddingLeft: "10px", lineHeight: "4vh"}}>{room.name}</span>
+                  {room.name}
                 </div>
-                
-                <div className="ui middle aligned list" style={{paddingLeft: "15px"}} key={`${room.id}-${Math.random()}`} >
-                  {room.users.map( user => (
-                    <div className="item" key={`${user}-${Math.random()}`}>
-                      <img className="ui avatar image" src={this.getUserAvatar(user)} alt="avatar" />
-                      <span className="content">
-                        {user}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                
               </div>
               ))}
         </div>
