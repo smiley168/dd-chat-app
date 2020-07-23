@@ -8,6 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.contentRef = React.createRef();
+
     this.state = {
       isLoggedIn: false,
       onlineMinutes: null,
@@ -147,6 +149,7 @@ class App extends React.Component {
       newestMessageId: newMessage.id,
     });
 
+    this.contentRef.current.scrollIntoView({ behavior: "smooth" });
   }
 
   onKeyDown = (e) => {
@@ -191,7 +194,7 @@ class App extends React.Component {
             {this.state.apiError}
           </div>
         ) : !this.state.isLoadingData && (
-          <div id="content-div" className="box content">
+          <div className="box content" ref={this.contentRef}>
             {this.state.selectedRoom.id === null && (
               <div className="empty">Select a room to begin your chat</div>
             )}
