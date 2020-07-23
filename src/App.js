@@ -9,6 +9,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      isLoadingData: true,
       listOfRooms: [],
       selectedRoom: {
         name: "",
@@ -27,7 +28,8 @@ class App extends React.Component {
         name: "Piggy",
         avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
         input: "",
-      }
+      },
+      apiError: "",
     };
 
   }
@@ -58,10 +60,16 @@ class App extends React.Component {
 
         this.setState({
           listOfRooms: enhancedRoomsData,
+          apiError: "",
+          isLoadingData: false,
         });
       }  
     } catch(err) {
       console.log("Error while getting chat rooms info. Details: " + err);
+      this.setState({
+        apiError: err.message,
+        isLoadingData: false,
+      });
     }
 
   }
@@ -124,7 +132,7 @@ class App extends React.Component {
         <div className="box header">
           <div className="left-side">DD Chat App</div>
           <div className="right-side">
-             <span style={{paddingRight: "5px"}}>Signed In As: </span>
+            <span style={{paddingRight: "5px"}}>Signed In As: </span>
             <img className="ui avatar image" alt="avatar" src={this.state.signedInUser.avatar} />
             {this.state.signedInUser.name}
           </div>
@@ -151,16 +159,28 @@ class App extends React.Component {
               </div>
               ))}
         </div>
-        <div className="box content">
-          {this.state.selectedRoom.id === null && (
-            <div className="empty">Select a room to begin your chat</div>
-            
-          )}
-          {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
-            <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser} />
-          )}
-          
-        </div>
+        {this.state.isLoadingData && (
+          <div className="ui segment">
+            <div className="ui active inverted dimmer">
+              <div class="ui large text loader">Loading data... Please wait...</div>
+            </div>
+          </div>
+        )}
+        {!this.state.isLoadingData && this.state.apiError.length > 0 ? (
+          <div className="box content">
+            {this.state.apiError}
+          </div>
+        ) : !this.state.isLoadingData && (
+          <div className="box content">
+            {this.state.selectedRoom.id === null && (
+              <div className="empty">Select a room to begin your chat</div>
+            )}
+            {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
+              <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser} />
+            )}
+          </div>
+        )}
+
         <div className="box footer">
           <div className="ui fluid action input full">
             <input 

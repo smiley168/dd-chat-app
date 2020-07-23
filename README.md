@@ -25,9 +25,23 @@ If you haven't already done so, please start the database server provided in the
 
 * This chat app lists the available chat rooms along with all the users belonging to each of the chat rooms.
 
-* When the app starts, it requires the currently signed in user (aka "Piggy" here) to select which chat room to message in. The "Send" button of the Input box is disabled until the user selects a chat room to message in.
+* When the app starts, it requires the currently signed in user (aka "Piggy" here) to select a chat room to message in. The selected chat room is highlighted.
 
-* 
+* The "Send" button of the Input box is disabled until the user selects a chat room to message in.
+
+* The currently signed in user can type and send messages into the selected chat room. 
+
+* When the currently signed in user switches between chat rooms, the previously inputed messages are preserved in the corresponding chat room until he/she reloads the page at which point all the app state gets reinitiatized.
+
+* Any messages sent from users other than the currently signed in user will have the callout bubble pointing to the left side along with the user name and the avatar. Any messages sent from the currently signed in user will have the callout bubble pointing to the right side along with the current user name and the avatar.
+
+
+### Handling state tranisitions and errors
+
+* After the initial app component is mounted, the app will make API requests to `http://localhost:8080/api` to get previously existing chatroom data. During this time, the 'Loading Data... Please wait...' messaging appears.
+
+* In case the database server is down, the chat app will display the error message.
+
 
 ### Possible future features
 
@@ -39,10 +53,16 @@ If you haven't already done so, please start the database server provided in the
 
   - On app start, the hardcoded user "Piggy" is signed in and shown on the app header top right hand 
 
-  - When a chat room is selected, all the past messages would appear in the chat room content
+  - When a chat room is selected, all the past messages would appear in the chat room content.
 
-* I am building a separate Storybook repository to test the components and the app page layout. If I get to present this project in a phone interview, I will have it ready to show you.
+  - If nothing is typed into the input box, no new messages will be posted even when hitting the 'Send' button.
+
+* I am building a separate Storybook repository to test the components and the app page layout. If I get to present this project in a phone interview, I will have it ready to show to the interviewer.
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Project design
+
+* This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+* It uses CSS grid layout and also https://semantic-ui.com/ library to make the UI appearances.
 
