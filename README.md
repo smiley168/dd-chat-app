@@ -25,18 +25,27 @@ If you haven't already done so, please start the database server provided in the
 
 ### Chat Features
 
-* This chat app lists the available chat rooms along with all the users belonging to each of the chat rooms.
+* The first screen you should see is the "login" screen. A user can type a username they'll use, and if they provide some string and hit "Join the DoorDash Chat!" button, we'll save their username for when they add new messages.
 
-* When the app starts, it requires the currently signed in user (aka "Piggy" here) to select a chat room to message in. The selected chat room is highlighted.
+* When you've submitted a username, we'll load up the chat interface.
 
-* The "Send" button of the Input box is disabled until the user selects a chat room to message in.
+* On the left, we have:
+    * user info
+      * username
+      * time that user has been online
+    * list of rooms available
 
-* The currently signed in user can type and send messages into the selected chat room. 
+On the right, we have the selected chat room. There, we show:
 
-* When the currently signed in user switches between chat rooms, the previously inputed messages are preserved in the corresponding chat room until he/she reloads the page at which point all the app state gets reinitiatized.
-
-* Any messages sent from users other than the currently signed in user will have the callout bubble pointing to the left side along with the user name and the avatar. Any messages sent from the currently signed in user will have the callout bubble pointing to the right side along with the current user name and the avatar.
-
+* room information
+  * room name,
+  * list of usernames of users in the room
+* messages
+  * message text
+  * username of the user that posted it
+  * newest messages on the bottom, older on the top
+  * scroll the view to see older messages
+The left panel should be a fixed width, and the right panel should stretch to accommodate
 
 ### Handling state tranisitions and errors
 
