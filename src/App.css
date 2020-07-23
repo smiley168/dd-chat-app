@@ -18,23 +18,17 @@
 
 .header {
     grid-area: header;
-    height: 60px;
-    padding: 20px;
-    line-height: 1.5em;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto;
-    grid-template-areas: 
-      "left-side right-side";
+    border-bottom: 1px solid #333;
+    text-align: center;
+    
 }
 
-.header > .right-side {
-  text-align: right;
-  font-size: medium;
+.box.header {
+  padding-top: 20px;
 }
 
-.header > .left-side {
-  padding-top: 5px;
+.box.header > p > span.signedInUser {
+  color: #ff3008;
 }
 
 .footer {

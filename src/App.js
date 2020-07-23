@@ -16,6 +16,7 @@ class App extends React.Component {
       selectedRoom: {
         name: "",
         id: null,
+        users: [],
         messages: [],
       },
       selectedUser: "",
@@ -60,6 +61,7 @@ class App extends React.Component {
             enhancedRoomsData.push(aggregatedData);
         }
 
+        console.dir(enhancedRoomsData);
         this.setState({
           listOfRooms: enhancedRoomsData,
           apiError: "",
@@ -71,11 +73,13 @@ class App extends React.Component {
         if(selectedChatRoom) {
           const visibleMessages = selectedChatRoom.messages;
           const roomName = selectedChatRoom.name;
+          const users = selectedChatRoom.users;
           this.setState({
             selectedRoom: {
               id: 0,
               name: roomName,
               messages: visibleMessages,
+              users: users,
             }
           });
         }
@@ -101,11 +105,13 @@ class App extends React.Component {
     if(selectedChatRoom) {
       const visibleMessages = selectedChatRoom.messages;
       const roomName = selectedChatRoom.name;
+      const users = selectedChatRoom.users;
       this.setState({
         selectedRoom: {
           id: roomId,
           name: roomName,
           messages: visibleMessages,
+          users: users,
         }
       });
     }
@@ -152,12 +158,10 @@ class App extends React.Component {
     return (
       <div className="wrapper">
         <div className="box header">
-          <div className="left-side">DD Chat App</div>
-          <div className="right-side">
-            <span style={{paddingRight: "5px"}}>Signed In As: </span>
-            <img className="ui avatar image" alt="avatar" src={this.state.signedInUser.avatar} />
-            {this.state.signedInUser.name}
-          </div>
+          <h2>{this.state.selectedRoom.name}</h2>
+          <p><span className="signedInUser">{this.state.signedInUser.name}</span>{this.state.selectedRoom.users.map( (username, index) => (
+              ', ' + username
+            ))}</p>
         </div>
         <div className="box sidebar">
           {this.state.listOfRooms.map( room => (
