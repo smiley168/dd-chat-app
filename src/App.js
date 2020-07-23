@@ -154,9 +154,13 @@ class App extends React.Component {
 
   onKeyDown = (e) => {
     if ( e.keyCode === 13 ) {
-      this.handleSendMessage();
+      if(this.state.isLoggedIn){
+        this.handleSendMessage();
+      }else if(this.state.signedInUser.name.length > 0){
+        this.setState({ isLoggedIn: true });
+      }
     }
-  }
+  };
 
   
   renderChat() {
@@ -235,6 +239,7 @@ class App extends React.Component {
             type="text" 
             placeholder="Type your username..."
             value={this.state.signedInUser.name}
+            onKeyDown={this.onKeyDown}
             onChange={ (e) => this.setState({ signedInUser: Object.assign(this.state.signedInUser, {name: e.target.value})}) }
           />
         </div>

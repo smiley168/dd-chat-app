@@ -25,6 +25,8 @@ If you haven't already done so, please start the database server provided in the
 
 ### Chat Features
 
+* The goal of the app is to take in a username to allow someone to "login", and then see a set of chat rooms with available messages. When you click into a room, you can view past messages, as well as add new messages.
+
 * The first screen you should see is the "login" screen. A user can type a username they'll use, and if they provide some string and hit "Join the DoorDash Chat!" button, we'll save their username for when they add new messages.
 
 * When you've submitted a username, we'll load up the chat interface.
