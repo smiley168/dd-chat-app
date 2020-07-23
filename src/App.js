@@ -67,6 +67,19 @@ class App extends React.Component {
           onlineMinutes: 0,
         });
 
+        const selectedChatRoom = this.state.listOfRooms[0]; // initialize to first room by default
+        if(selectedChatRoom) {
+          const visibleMessages = selectedChatRoom.messages;
+          const roomName = selectedChatRoom.name;
+          this.setState({
+            selectedRoom: {
+              id: 0,
+              name: roomName,
+              messages: visibleMessages,
+            }
+          });
+        }
+
         setInterval( () => {
           this.setState({
             onlineMinutes: this.state.onlineMinutes + 1,
@@ -217,7 +230,7 @@ class App extends React.Component {
       <div className="ui form" style={{padding: "40%"}}>
         <div className="field">
           <input
-            maxlength="20"
+            maxLength="20"
             type="text" 
             placeholder="Type your username..."
             value={this.state.signedInUser.name}
