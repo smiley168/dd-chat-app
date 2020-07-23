@@ -26,7 +26,7 @@ class App extends React.Component {
       signedInUser: {
         name: "Piggy",
         avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
-        input: null,
+        input: "",
       }
     };
 
@@ -90,6 +90,8 @@ class App extends React.Component {
   }
 
   handleSendMessage = () => {   
+    if(this.state.signedInUser.input.length === 0) return;
+
     const newMessage = {
       name: this.state.signedInUser.name,
       message: this.state.signedInUser.input,
@@ -129,24 +131,24 @@ class App extends React.Component {
         </div>
         <div className="box sidebar">
           {this.state.listOfRooms.map( room => (
-                <>
-                  <div className={this.state.selectedRoom.name === room.name ? "room-name item selected-room" : "room-name item "} key={room.id} onClick={() => this.handleClick(room.id)}>
-                    <span><i className="users icon"></i></span>
-                    <span style={{paddingLeft: "10px", lineHeight: "4vh"}}>{room.name}</span>
-                  </div>
-                  
-                  <div className="ui middle aligned list" style={{paddingLeft: "15px"}}>
-                    {room.users.map( user => (
-                      <div className="item">
-                        <img className="ui avatar image" src={this.getUserAvatar(user)} alt="avatar" />
-                        <span className="content">
-                          {user}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                </>
+              <div key={Math.random()}>
+                <div className={this.state.selectedRoom.name === room.name ? "room-name item selected-room" : "room-name item "} key={`${room.id}-${Math.random()}`} onClick={() => this.handleClick(room.id)}>
+                  <span><i className="users icon"></i></span>
+                  <span style={{paddingLeft: "10px", lineHeight: "4vh"}}>{room.name}</span>
+                </div>
+                
+                <div className="ui middle aligned list" style={{paddingLeft: "15px"}} key={`${room.id}-${Math.random()}`} >
+                  {room.users.map( user => (
+                    <div className="item" key={`${user}-${Math.random()}`}>
+                      <img className="ui avatar image" src={this.getUserAvatar(user)} alt="avatar" />
+                      <span className="content">
+                        {user}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                
+              </div>
               ))}
         </div>
         <div className="box content">
@@ -155,7 +157,7 @@ class App extends React.Component {
             
           )}
           {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
-            <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser}/>
+            <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser} />
           )}
           
         </div>
