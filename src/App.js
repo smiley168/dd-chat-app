@@ -162,7 +162,7 @@ class App extends React.Component {
         {this.state.isLoadingData && (
           <div className="ui segment">
             <div className="ui active inverted dimmer">
-              <div class="ui large text loader">Loading data... Please wait...</div>
+              <div className="ui large text loader">Loading data... Please wait...</div>
             </div>
           </div>
         )}

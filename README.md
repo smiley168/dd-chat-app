@@ -47,6 +47,8 @@ If you haven't already done so, please start the database server provided in the
 
 * Build in multi-user real time chat feature if there are API endpoints supporting it.
 
+* If I have more time, I would write more integration tests to cover all the possible use cases.
+
 ### Testing
 
 * Test cases considered during development:
