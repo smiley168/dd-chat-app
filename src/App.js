@@ -9,6 +9,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      isLoggedIn: false,
+      onlineMinutes: null,
       isLoadingData: true,
       listOfRooms: [],
       selectedRoom: {
@@ -25,7 +27,7 @@ class App extends React.Component {
         "Piggy": "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
       },
       signedInUser: {
-        name: "Piggy",
+        name: "",
         avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
         input: "",
       },
@@ -62,7 +64,14 @@ class App extends React.Component {
           listOfRooms: enhancedRoomsData,
           apiError: "",
           isLoadingData: false,
+          onlineMinutes: 0,
         });
+
+        setInterval( () => {
+          this.setState({
+            onlineMinutes: this.state.onlineMinutes + 1,
+          });
+        }, 60000);
       }  
     } catch(err) {
       console.log("Error while getting chat rooms info. Details: " + err);
@@ -126,7 +135,7 @@ class App extends React.Component {
   }
 
   
-  render() {
+  renderChat() {
     return (
       <div className="wrapper">
         <div className="box header">
@@ -193,12 +202,44 @@ class App extends React.Component {
             <button 
               className={this.state.selectedRoom.id === null ? "ui button disabled" : "ui button"} 
               onClick={this.handleSendMessage}
-              style={{color: "teal", fontSize: "medium", backgroundColor: "aqua"}}
+              style={{color: "blue", fontSize: "medium", backgroundColor: "white"}}
             >
               Send
             </button>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  renderLogin() {
+    return (
+      <div className="ui form" style={{padding: "40%"}}>
+        <div className="field">
+          <input
+            maxlength="20"
+            type="text" 
+            placeholder="Type your username..."
+            value={this.state.signedInUser.name}
+            onChange={ (e) => this.setState({ signedInUser: Object.assign(this.state.signedInUser, {name: e.target.value})}) }
+          />
+        </div>
+        
+        <div 
+          className="ui submit button" 
+          style={{width: "100%", backgroundColor: "#ff3008", color: "#fff"}}
+          onClick={ () => this.setState({ isLoggedIn: true}) }
+        >
+          Join the DoorDash Chat!
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.isLoggedIn === false ? this.renderLogin() : this.renderChat()}
       </div>
     );
   }
