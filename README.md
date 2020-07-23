@@ -1,6 +1,6 @@
 ## DD Chat App
 
-![Demo](demo/DoorDash%20Frontend%20Take%20home%20exercise%20screencast_%20Jul%2022%2C%202020%208_25%20PM.gif)
+![Demo](demo/DoorDash%20Frontend%20Take%20home%20exercise%20screencast_%20Jul%2022%2C%202020%208_25%20PM_v2.gif)
 
 ### Prerequisites
 
