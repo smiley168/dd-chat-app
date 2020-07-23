@@ -1,5 +1,7 @@
 ## DD Chat App
 
+![Demo](demo/DoorDash Frontend Take home exercise screencast_ Jul 22, 2020 8_25 PM.gif)
+
 ### Prerequisites
 
 If you haven't already done so, please start the database server provided in the `Frontend-Interview-Project-master` zip file and make sure the following mock API endpoints listed in the `Frontend-Interview-Project-master\spec\api-endpoints.md` are returning data correctly before going to the next step.
