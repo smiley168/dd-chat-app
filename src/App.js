@@ -33,6 +33,7 @@ class App extends React.Component {
         input: "",
       },
       apiError: "",
+      newestMessageId: Math.floor(Math.random() * 3),
     };
 
   }
@@ -61,7 +62,6 @@ class App extends React.Component {
             enhancedRoomsData.push(aggregatedData);
         }
 
-        console.dir(enhancedRoomsData);
         this.setState({
           listOfRooms: enhancedRoomsData,
           apiError: "",
@@ -131,7 +131,7 @@ class App extends React.Component {
     const newMessage = {
       name: this.state.signedInUser.name,
       message: this.state.signedInUser.input,
-      id: this.state.signedInUser.id,
+      id: this.state.newestMessageId + 1,
       reaction: null,
     };
     const roomId = this.state.selectedRoom.id;
@@ -144,7 +144,9 @@ class App extends React.Component {
       listOfRooms: newListsOfRooms,
       selectedRoom: Object.assign(this.state.selectedRoom, {messages: chatRoomCurrMessages}),
       signedInUser: Object.assign(this.state.signedInUser, {input: ""}),
+      newestMessageId: newMessage.id,
     });
+
   }
 
   onKeyDown = (e) => {
@@ -189,12 +191,12 @@ class App extends React.Component {
             {this.state.apiError}
           </div>
         ) : !this.state.isLoadingData && (
-          <div className="box content">
+          <div id="content-div" className="box content">
             {this.state.selectedRoom.id === null && (
               <div className="empty">Select a room to begin your chat</div>
             )}
             {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
-              <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser} />
+              <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser} newestMessageId={this.state.newestMessageId} />
             )}
           </div>
         )}

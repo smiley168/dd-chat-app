@@ -30,6 +30,14 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      function updateScroll(){
+        var element = document.getElementById("content-div");
+        if(element)
+          element.scrollTop = element.scrollHeight;
+      }
+      setInterval(updateScroll, 1000);
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.
