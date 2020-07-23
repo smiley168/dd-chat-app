@@ -1,6 +1,6 @@
 ## DD Chat App
 
-![Demo](demo/DoorDash%20Frontend%20Take%20home%20exercise%20screencast_%20Jul%2022%2C%202020%208_25%20PM_v2.gif)
+![Demo](demo/Door%20Dash%20chat%20app%20demo.gif)
 
 ### Prerequisites
 
@@ -17,9 +17,7 @@ If you haven't already done so, please start the database server provided in the
 
 ### Assumptions
 
-* Because I cannot modify the server.js file in the `Frontend-Interview-Project-master`, I have made the following assumptions:
-
-  - I assume there is already a current user signed in to the chat app because there isn't any user authentication API endpoint provided. The sample currently signed in user is named "Piggy".
+* Because I cannot modify the server.js file in the `Frontend-Interview-Project-master`, I have made the following assumption:
 
   - I assume that the current user can ONLY message in the available chat rooms (i.e. 'Tea Chats' and 'Coffee Chats') and not privately with each of the listed users in the chat rooms.
 
