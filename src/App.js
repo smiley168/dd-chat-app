@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import chatserver from './apis/chatserver';
 import './App.css';
 import ChatBubble from './components/ChatBubble';
 import StatusBox from './components/StatusBox';
@@ -43,18 +43,17 @@ class App extends React.Component {
 
   }
 
-  async componentDidMount() {
-
+  onAppLoad = async () => {
     try{
-      const listOfRooms = await axios.get('http://localhost:8080/api/rooms');
+      const listOfRooms = await chatserver.get('http://localhost:8080/api/rooms');
 
       if(listOfRooms && listOfRooms.data && listOfRooms.data.length > 0) {
         let enhancedRoomsData = [];
         const roomsData = listOfRooms.data;
         for(let i = 0; i < roomsData.length; i++) {
           const room = roomsData[i];
-          const usersInRoom = await axios.get(`http://localhost:8080/api/rooms/${room.id}`);
-          const messagesInRoom = await axios.get(`http://localhost:8080/api/rooms/${room.id}/messages`);
+          const usersInRoom = await chatserver.get(`http://localhost:8080/api/rooms/${room.id}`);
+          const messagesInRoom = await chatserver.get(`http://localhost:8080/api/rooms/${room.id}/messages`);
 
           let usersMessagesInRoom = {};
           if(usersInRoom && usersInRoom.data && usersInRoom.data.users) {
@@ -102,24 +101,37 @@ class App extends React.Component {
         isLoadingData: false,
       });
     }
+  };
 
+  componentDidMount() {
+    this.onAppLoad();
   }
 
-  handleClick = (roomId) => {
-    const selectedChatRoom = this.state.listOfRooms[roomId];
-    if(selectedChatRoom) {
-      const visibleMessages = selectedChatRoom.messages;
-      const roomName = selectedChatRoom.name;
-      const users = selectedChatRoom.users;
-      this.setState({
-        selectedRoom: {
-          id: roomId,
-          name: roomName,
-          messages: visibleMessages,
-          users: users,
-        }
-      });
-    }
+  handleClick = async (roomId) => {
+    const roomInfo = await chatserver.get(`http://localhost:8080/api/rooms/${roomId}`);
+    const messagesInRoom = await chatserver.get(`http://localhost:8080/api/rooms/${roomId}/messages`);
+    this.setState({
+      selectedRoom: {
+        id: roomId,
+        name: roomInfo.data.name,
+        messages: messagesInRoom.data,
+        users: roomInfo.data.users,
+      }
+    });
+    // const selectedChatRoom = this.state.listOfRooms[roomId];
+    // if(selectedChatRoom) {
+    //   const visibleMessages = selectedChatRoom.messages;
+    //   const roomName = selectedChatRoom.name;
+    //   const users = selectedChatRoom.users;
+    //   this.setState({
+    //     selectedRoom: {
+    //       id: roomId,
+    //       name: roomName,
+    //       messages: visibleMessages,
+    //       users: users,
+    //     }
+    //   });
+    // }
   }
 
   getUserAvatar = (userName) => {
