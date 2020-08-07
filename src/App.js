@@ -4,6 +4,7 @@ import './App.css';
 import ChatBubble from './components/ChatBubble';
 import StatusBox from './components/StatusBox';
 import ChatRoomList from './components/ChatRoomList';
+import LoadingContent from './components/LoadingContent';
 
 class App extends React.Component {
 
@@ -182,11 +183,7 @@ class App extends React.Component {
 
         </div>
         {this.state.isLoadingData && (
-          <div className="ui segment">
-            <div className="ui active inverted dimmer">
-              <div className="ui large text loader">Loading data... Please wait...</div>
-            </div>
-          </div>
+          <LoadingContent />
         )}
         {!this.state.isLoadingData && this.state.apiError.length > 0 ? (
           <div className="box content">
@@ -194,9 +191,6 @@ class App extends React.Component {
           </div>
         ) : !this.state.isLoadingData && (
           <div className="box content" ref={this.contentRef}>
-            {this.state.selectedRoom.id === null && (
-              <div className="empty">Select a room to begin your chat</div>
-            )}
             {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
               <ChatBubble messages={this.state.selectedRoom.messages} signedInUser={this.state.signedInUser} newestMessageId={this.state.newestMessageId} />
             )}
