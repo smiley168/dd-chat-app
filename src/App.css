@@ -13,20 +13,6 @@
   padding: 0;
 }
 
-.box.sidebar > .signedInInfo {
-  margin-bottom: 25px;
-  padding: 25px;
-}
-
-.box.sidebar > .signedInInfo > div {
-  font-size: large;
-  font-weight: bold;
-}
-
-.box.sidebar > .signedInInfo > p {
-  font-size: small;
-  margin-top: 5px;
-}
 
 .box.sidebar > div > .room-name.item {
   padding: 10px 25px;
@@ -108,21 +94,6 @@
   padding: 25px;
 }
 
-.item {
-  padding: 10px;
-  cursor: default;
-}
-
-.item.room-name {
-  cursor: pointer;
-}
-
-.item.selected-room {
-  background-color: #333;
-  
-  color: #fff;
-  width: 100%;
-}
 
 .ui.middle.aligned.list{
   margin-top: 5px;

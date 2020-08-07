@@ -4,6 +4,8 @@ import '../App.css';
 
 const ChatBubble = (props) => {
   const { messages, signedInUser } = props;
+  console.log(messages);
+  console.log(signedInUser);
 
   return messages.length > 0 && messages.map( ({name, message, id, reaction}) => {
     if(name === signedInUser.name) {

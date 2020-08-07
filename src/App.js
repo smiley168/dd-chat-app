@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import './App.css';
 import ChatBubble from './components/ChatBubble';
+import StatusBox from './components/StatusBox';
+import ChatRoomList from './components/ChatRoomList';
 
 class App extends React.Component {
 
@@ -162,6 +164,8 @@ class App extends React.Component {
     }
   };
 
+  onClickChatRoom = (roomId) => this.handleClick(roomId);
+
   
   renderChat() {
     return (
@@ -173,18 +177,9 @@ class App extends React.Component {
             ))}</p>
         </div>
         <div className="box sidebar">
-          <div className="signedInInfo">
-            <div>{this.state.signedInUser.name}</div>
-            <p>Online for {this.state.onlineMinutes} minutes</p>
-          </div>
-          
-          {this.state.listOfRooms.map( room => (
-              <div key={Math.random()}>
-                <div className={this.state.selectedRoom.name === room.name ? "room-name item selected-room" : "room-name item "} key={`${room.id}-${Math.random()}`} onClick={() => this.handleClick(room.id)}>
-                  {room.name}
-                </div>
-              </div>
-              ))}
+          <StatusBox signedInUser={this.state.signedInUser} onlineMinutes={this.state.onlineMinutes} />
+          <ChatRoomList listOfRooms={this.state.listOfRooms} selectedRoom={this.state.selectedRoom} handleClick={this.onClickChatRoom} />
+
         </div>
         {this.state.isLoadingData && (
           <div className="ui segment">
@@ -203,7 +198,7 @@ class App extends React.Component {
               <div className="empty">Select a room to begin your chat</div>
             )}
             {this.state.selectedRoom.id !== null && this.state.selectedRoom.messages && (
-              <ChatBubble messages={this.state.selectedRoom.messages} avatars={this.state.users} signedInUser={this.state.signedInUser} newestMessageId={this.state.newestMessageId} />
+              <ChatBubble messages={this.state.selectedRoom.messages} signedInUser={this.state.signedInUser} newestMessageId={this.state.newestMessageId} />
             )}
           </div>
         )}

@@ -64,9 +64,9 @@ The left panel should be a fixed width, and the right panel should stretch to ac
 
 * Test cases considered during development:
 
-  - On app start, the hardcoded user "Piggy" is signed in and shown on the app header top right hand 
+  - On app start, the login screen is shown.
 
-  - When a chat room is selected, all the past messages would appear in the chat room content.
+  - Upon logging in after providing a username, the first chat room is selected by default. 
 
   - If nothing is typed into the input box, no new messages will be posted even when hitting the 'Send' button.
 

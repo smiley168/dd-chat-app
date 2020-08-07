@@ -1,0 +1,16 @@
+.item.room-name {
+  cursor: pointer;
+}
+
+.item {
+  padding: 10px;
+  cursor: default;
+}
+
+
+.item.selected-room {
+  background-color: #333;
+  
+  color: #fff;
+  width: 100%;
+}

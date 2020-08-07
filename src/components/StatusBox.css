@@ -1,0 +1,14 @@
+.box.sidebar > .signedInInfo {
+  margin-bottom: 25px;
+  padding: 25px;
+}
+
+.box.sidebar > .signedInInfo > div {
+  font-size: large;
+  font-weight: bold;
+}
+
+.box.sidebar > .signedInInfo > p {
+  font-size: small;
+  margin-top: 5px;
+}
