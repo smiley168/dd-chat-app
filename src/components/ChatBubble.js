@@ -21,14 +21,14 @@ const RightBubble = ({message, id, name}) => {
 
 const ChatBubble = (props) => {
   const { messages, signedInUser } = props;
-  console.log(messages);
-  console.log(signedInUser);
+  // console.log(messages);
+  // console.log(signedInUser);
 
   return messages.length > 0 && messages.map( ({name, message, id, reaction}) => {
     if(name === signedInUser.name) {
-      return <LeftBubble message={message} id={id} />;
+      return <LeftBubble message={message} id={id} key={id}/>;
     } else {
-      return <RightBubble message={message} id={id} name={name} />;
+      return <RightBubble message={message} id={id} name={name} key={id} />;
     }
   }); 
 };

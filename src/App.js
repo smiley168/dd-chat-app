@@ -118,20 +118,6 @@ class App extends React.Component {
         users: roomInfo.data.users,
       }
     });
-    // const selectedChatRoom = this.state.listOfRooms[roomId];
-    // if(selectedChatRoom) {
-    //   const visibleMessages = selectedChatRoom.messages;
-    //   const roomName = selectedChatRoom.name;
-    //   const users = selectedChatRoom.users;
-    //   this.setState({
-    //     selectedRoom: {
-    //       id: roomId,
-    //       name: roomName,
-    //       messages: visibleMessages,
-    //       users: users,
-    //     }
-    //   });
-    // }
   }
 
   getUserAvatar = (userName) => {
@@ -142,7 +128,7 @@ class App extends React.Component {
     return null;
   }
 
-  handleSendMessage = () => {   
+  handleSendMessage = async () => {   
     if(this.state.signedInUser.input.length === 0) return;
 
     const newMessage = {
@@ -151,6 +137,12 @@ class App extends React.Component {
       id: this.state.newestMessageId + 1,
       reaction: null,
     };
+
+    const response = await chatserver.post(`http://localhost:8080/api/rooms/${this.state.selectedRoom.id}/messages`, newMessage);
+
+    console.log('after post');
+    console.log(response);
+
     const roomId = this.state.selectedRoom.id;
     const currListsOfRooms = this.state.listOfRooms;
     const newListsOfRooms = [].concat(currListsOfRooms);
@@ -181,11 +173,18 @@ class App extends React.Component {
 
   
   renderChat() {
+    // remove current signed in user from being displayed twice under the chat room name
+    const currChatRoomUsers = this.state.selectedRoom.users.slice();
+    const indexOfCurrentUser = currChatRoomUsers.indexOf(this.state.signedInUser.name);
+    if(indexOfCurrentUser !== -1) {
+      currChatRoomUsers.splice(indexOfCurrentUser, 1);
+    }
+    
     return (
       <div className="wrapper">
         <div className="box header">
           <h3>{this.state.selectedRoom.name}</h3>
-          <p><span className="signedInUser">{this.state.signedInUser.name}</span>{this.state.selectedRoom.users.map( (username, index) => (
+          <p><span className="signedInUser">{this.state.signedInUser.name}</span>{currChatRoomUsers.map( (username, index) => (
               ', ' + username
             ))}</p>
         </div>
